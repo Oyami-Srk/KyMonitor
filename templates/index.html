@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>KyCloud Traffic Info</title>
+    <style>
+        img {
+            width: 100%;
+        }
+    </style>
+    <script>
+        function change_chart(year, month) {
+            document.getElementById("chart").src = "get_traffic_chart?year=" + year + "&month=" + month;
+        }
+    </script>
+</head>
+<body>
+<img id="chart" src="get_traffic_chart"></img>
+{% for date in dates %}
+    <span><button onclick="change_chart({{ date[0] }}, {{ date[1] }})">
+        {{ date[0] }}-{{ date[1] }}</button></span>
+{% endfor %}
+</body>
+</html>
