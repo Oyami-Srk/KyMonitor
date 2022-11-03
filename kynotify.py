@@ -23,12 +23,24 @@ predict_str = r"""
 * 置信下限：{lower:.2f} GB"""
 
 
-def gen_text():
+def get_now():
     now = datetime.now()
-    begin, end = get_period(now.year, now.month)
+    year = now.year
+    month = now.month
+    if now.day < RESET_DATE:
+        month -= 1
+        if month == 0:
+            month = 12
+            year -= 1
+    return year, month
+
+
+def gen_text():
+    year, month = get_now()
+    begin, end = get_period(year, month)
     is_need_predict = end - datetime.now() > timedelta(days=1)
     days = (end - datetime.now()).days
-    df, last_record = get_remaining_dataframe(now.year, now.month)
+    df, last_record = get_remaining_dataframe(year, month)
     predicted = None
     if is_need_predict:
         predicted = get_predict(df)
