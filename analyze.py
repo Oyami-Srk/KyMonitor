@@ -38,6 +38,12 @@ def get_record_of_month(year: int, month: int):
         cur = conn.cursor()
         c = cur.execute(QUERY_SQL, (begin, end))
         for row in c:
+            row = (
+                row[0][:-2] + '00',
+                row[1],
+                row[2],
+                row[3]
+            )
             result.append(row)
         c.close()
         cur.close()
